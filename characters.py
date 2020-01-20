@@ -1,5 +1,5 @@
 from gameView import GameView
-from gameplay import board
+import gameplay
 
 class Character:
 
@@ -7,7 +7,7 @@ class Character:
         self.form = [["B"]]
 
         self.xPos = 0
-        self.yPos = board.viewFrameHeight - board.groundHeight
+        self.yPos = gameplay.board.viewFrameHeight - gameplay.board.groundHeight
 
         self.lives = 3
         self.score = 0

@@ -1,5 +1,6 @@
 import sys
 import time
+import input
 from gameView import GameView
 from characters import Character
 
@@ -16,5 +17,19 @@ def endGame():
     sys.exit("Game Over")
 
 def gameLoop(GameView, Character):
-    while(1):
-      return  
+    i=0
+    for i in range(10):
+        inputKey = input.get()
+
+        if inputKey == 'q':
+            endGame()
+
+        elif mandalorian.lives == 0:
+            endGame()
+        
+        else:
+            print("i = "+str(i))
+            board.displayGameView()
+
+        
+
