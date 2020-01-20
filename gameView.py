@@ -9,11 +9,11 @@ class GameView:
         self.height = height
         self.width = width
         self.groundHeight = height/8        #Ground is 1/8th the height of the screen
-        self.ceilingHeight = height/10      #Ceiling is 1/10th the height of the screen
+        self.ceilingHeight = height/15      #Ceiling is 1/10th the height of the screen
         self.dimensions = (height, width)
 
         # Design empty space
-        self.viewDesign = [[" " for x in range(width)] for y in range(height)]
+        self.viewDesign = [[" " for y in range(height)] for x in range(width)]
         
         print("val 1: "+ str(self.height - int(self.groundHeight)))
         print("val2: " + str(self.height))

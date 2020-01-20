@@ -6,7 +6,7 @@ def displayOptions():
 
     if option == "s":
         startGame()
-        board = GameView(20, 200)
+        board = GameView(40, 190)
         board.displayGameView()
     elif option == "q":
        endGame()
