@@ -3,8 +3,10 @@ import gameplay
 
 class Character:
 
-    def __init__(self):
-        self.form = [["B"]]
+    def __init__(self, height, width, form):
+        self.height = height
+        self.width = width
+        self.form = form
 
         self.xPos = 0
         self.yPos = gameplay.board.viewFrameHeight - gameplay.board.groundHeight
@@ -20,3 +22,17 @@ class Character:
 
     def moveRight(self):
         self.xPos = self.xPos + 1
+
+    def position(self):
+        for x in range(self.width):
+            for y in range(self.height):
+                gameplay.board.viewDesign[gameplay.board.viewSection + self.xPos + x ][self.yPos + y - self.height] = self.form[x][y]
+
+def Mandalorian():
+
+    height = 4
+    width = 3
+    form = [["M" for x in range(height)] for y in range(width)]
+    mandalorian = Character(height, width, form)
+
+    return mandalorian

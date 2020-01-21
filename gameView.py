@@ -2,6 +2,7 @@ import numpy as np
 import sys
 import random
 import time
+import gameplay
 
 class GameView:
 
@@ -39,7 +40,7 @@ class GameView:
                 self.viewDesign[x][y] = "~"
 
     def displayGameView(self):
-        #print("\033[0;0H]")
+        print("\033[0;0H]")
 
         for y in range(self.viewFrameHeight):
             for x in range(self.viewSection, self.viewSection+self.viewFrameWidth):

@@ -2,14 +2,15 @@ import sys
 import time
 import input
 from gameView import GameView
-from characters import Character
+from characters import Character, Mandalorian
 
 board = GameView(40, 190)
-mandalorian = Character()
+mandalorian = Mandalorian()
 
 def startGame():
     print("Start Game")
 
+    mandalorian.position()
     board.displayGameView()
     gameLoop(board, mandalorian)
 
@@ -28,6 +29,7 @@ def gameLoop(GameView, Character):
             endGame()
         
         else:
+            mandalorian.position()
             print("i = "+str(i))
             board.displayGameView()
 
