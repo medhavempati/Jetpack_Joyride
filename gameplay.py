@@ -4,61 +4,83 @@ from makeCharacterForm import makeMando
 from characters import Character, Mandalorian
 from zappers import Zapper, VerticalZapper, HorizontalZapper, LeftZapper, RightZapper
 from coins import Coins
+from powerUps import activateShield, speedUp, shieldTimer, SpeedPowerUp, speedTimer
 
 board = Board()
 form = makeMando()
 mandalorian = Mandalorian(4, 3, form, board)
 zapper = Zapper(0, 0, 0, board)
 coins = Coins(board)
+speedPowerUps = SpeedPowerUp(board)
 
 def startGame():
 
     mandalorian.addToBoard()
     zapper.generateRandomZappers()
     coins.generateRandomCoins()
-    board.displayBoard()
+    speedPowerUps.generateRandomPowerUp()
 
+    board.displayBoard()
 
     while(1):
         inputKey = input.get()
         checkMovement(mandalorian, board, "")
         board.timeTrack += 1
 
+        shieldTimer(board, mandalorian)
+        speedTimer(board, mandalorian)
+
         if inputKey == "w":
             if checkMovement(mandalorian, board, inputKey) == 1:
                 mandalorian.moveUp()
             if checkMovement(mandalorian, board, inputKey) == 0:
-                mandalorian.lives -= 1
+                if mandalorian.shield == 0:
+                    # board.mandoLives -= 1
+                    mandalorian.shield = 0
                 mandalorian.moveUp()
             if checkMovement(mandalorian, board, inputKey) == 3:
                 mandalorian.score += 5
+                mandalorian.moveUp()
+            if checkMovement(mandalorian, board, inputKey) == 1:
+                mandalorian.speed = 2
+                board.speedTime = 30
                 mandalorian.moveUp()
 
         elif inputKey == "d":
             if checkMovement(mandalorian, board, inputKey) == 1:
                 mandalorian.moveRight()
             if checkMovement(mandalorian, board, inputKey) == 0:
-                mandalorian.lives -= 1
+                if mandalorian.shield == 0:
+                    # board.mandoLives -= 1
+                    mandalorian.shield = 0
                 mandalorian.moveRight()
             if checkMovement(mandalorian, board, inputKey) == 3:
                 mandalorian.score += 5
+                mandalorian.moveRight()
+            if checkMovement(mandalorian, board, inputKey) == 5:
+                mandalorian.speed = 2
                 mandalorian.moveRight()
 
         elif inputKey == "a":
             if checkMovement(mandalorian, board, inputKey) == 1:
                 mandalorian.moveLeft()
             if checkMovement(mandalorian, board, inputKey) == 0:
-                mandalorian.lives -= 1
+                if mandalorian.shield == 0:
+                    # board.mandoLives -= 1
+                    mandalorian.shield = 0
                 mandalorian.moveLeft()
             if checkMovement(mandalorian, board, inputKey) == 3:
                 mandalorian.score += 5
+                mandalorian.moveLeft()
+            if checkMovement(mandalorian, board, inputKey) == 1:
+                mandalorian.speed = 2
                 mandalorian.moveLeft()
 
         elif inputKey == "q":
             print("Game Over!\n")
             break
 
-        elif mandalorian.lives <= 0:
+        elif board.mandoLives <= 0:
             print("You Died!\n")
             break
 
@@ -67,8 +89,17 @@ def startGame():
             if checkMovement(mandalorian, board, inputKey) == 1:
                 mandalorian.moveDown()
             if checkMovement(mandalorian, board, inputKey) == 0:
-                mandalorian.lives -= 1
+                if mandalorian.shield == 0:
+                    # board.mandoLives -= 1
+                    mandalorian.shield = 0
                 mandalorian.moveDown()
+            if checkMovement(mandalorian, board, inputKey) == 1:
+                mandalorian.speed = 2
+                mandalorian.moveDown()
+
+        elif inputKey == " " and board.shieldPermission == 1:
+            activateShield(mandalorian)
+            board.shieldOn -= 1
         
         moveBoard(board, mandalorian)
         board.displayBoard()
@@ -90,6 +121,7 @@ def checkMovement(mandalorian, board, inputKey):
     return 2 -> Ground/Ceiling
     return 3 -> Coins
     return 4 -> Out_Of_Frame
+    return 5 -> Speed Power Up
     '''
 
     if inputKey == "d":
@@ -100,6 +132,8 @@ def checkMovement(mandalorian, board, inputKey):
                 return 0
             elif board.boardDesign[mandalorian.xPos + mandalorian.width + board.boardSection][-i -1 -board.groundHeight ] == "$":
                 return 3
+            elif board.boardDesign[mandalorian.xPos + mandalorian.width + board.boardSection][-i -1 -board.groundHeight ] == ">>":
+                return 5
     
     elif inputKey == "a":
         if (mandalorian.xPos - 1 + board.boardSection) <= board.boardSection :
@@ -109,6 +143,8 @@ def checkMovement(mandalorian, board, inputKey):
                 return 0
             elif board.boardDesign[mandalorian.xPos - 1 + board.boardSection][-i -1 -board.groundHeight ] == "$":
                 return 3
+            elif board.boardDesign[mandalorian.xPos - 1 + board.boardSection][-i -1 -board.groundHeight ] == ">>":
+                return 5
 
     elif inputKey == "w":
         for i in range(mandalorian.xPos, mandalorian.xPos + mandalorian.width):
@@ -118,6 +154,8 @@ def checkMovement(mandalorian, board, inputKey):
                 return 2
             elif board.boardDesign[i][-mandalorian.yPos - mandalorian.height - board.groundHeight - 1] == "$":
                 return 3
+            elif board.boardDesign[i][-mandalorian.yPos - mandalorian.height - board.groundHeight - 1] == ">>":
+                return 5
 
     elif inputKey == "":
         if (mandalorian.xPos - 2 + board.boardSection) <= board.boardSection :
@@ -129,5 +167,7 @@ def checkMovement(mandalorian, board, inputKey):
                 return 2
             elif board.boardDesign[i][mandalorian.yPos - 1] == "$":
                 return 3
+            elif board.boardDesign[i][mandalorian.yPos - 1] == ">>":
+                return 5
     return 1
         

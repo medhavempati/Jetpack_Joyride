@@ -21,6 +21,12 @@ class Board:
 
         self.timeTrack = 0
 
+        self.shieldOn = 11
+        self.shieldWait = 61
+        self.shieldPermission = 1
+
+        self.speedTime = 31
+
         for i in range(self.totalWidth):
             for j in range(self.ceilingHeight):
                 self.boardDesign[i][j] = "C"
@@ -48,11 +54,11 @@ class Board:
         return
 
     def displayBoard(self):
-        print("\033[0;0H]")
+        print("\033[0;0H")
 
-        print('Lives: ' + str(self.mandoLives))
-        print('Score: ' + str(self.mandoScore))
-        print("Time: " + str(self.timeTrack))
+        print(colorama.Back.BLACK + colorama.Fore.WHITE + 'Lives: ' + str(self.mandoLives))
+        print(colorama.Back.BLACK + colorama.Fore.WHITE + 'Score: ' + str(self.mandoScore))
+        print(colorama.Back.BLACK + colorama.Fore.WHITE + "Time: " + str(self.timeTrack))
 
         for i in range(self.height):
             for j in range(self.boardSection, self.boardSection + self.frameWidth):
@@ -68,6 +74,8 @@ class Board:
                     print(colorama.Back.MAGENTA + " ", end="")
                 elif self.boardDesign[j][i] == "$":
                     print(colorama.Back.BLACK + colorama.Fore.YELLOW + "$", end="")
+                elif self.boardDesign[j][i] == ">>":
+                    print(colorama.Back.RED + colorama.Fore.YELLOW + ">>", end="")
                 
             print()
 
