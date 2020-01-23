@@ -1,7 +1,14 @@
 import sys
-from displayOptions import displayOptions 
+from gameplay import startGame
 
-def preGame():
-    displayOptions()
+def displayOptions():
 
-preGame()
+    option = input('Press Enter to start playing\nPress Q to quit\n')
+
+    if option == "":
+        startGame()
+    
+    elif option == 'q':
+        print('Game Over')
+
+displayOptions()

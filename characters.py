@@ -1,38 +1,67 @@
-from gameView import GameView
-import gameplay
+from board import Board
 
 class Character:
+    
+    def __init__(self, height, width, form, board):
 
-    def __init__(self, height, width, form):
         self.height = height
         self.width = width
         self.form = form
 
         self.xPos = 0
-        self.yPos = gameplay.board.viewFrameHeight - gameplay.board.groundHeight
-
-        self.lives = 3
+        self.yPos = 0
+        
+        self.lives = 5
         self.score = 0
 
+        self.board = board
+
     def moveUp(self):
-        self.yPos = self.yPos + 1
+        for i in range(self.height):
+            for j in range(self.width):
+                self.board.boardDesign[self.board.boardSection + j + self.xPos][-self.board.groundHeight - i -1 - self.yPos] = " "
+
+        self.yPos += 1
+
+        self.addToBoard()
+
+    def moveDown(self):
+        for i in range(self.height):
+            for j in range(self.width):
+                self.board.boardDesign[self.board.boardSection + j + self.xPos][-self.board.groundHeight - i -1 - self.yPos] = " "
+
+        self.yPos -= 1
+
+        self.addToBoard()
 
     def moveLeft(self):
-        self.xPos = self.xPos - 1
+        for i in range(self.height):
+            for j in range(self.width):
+                self.board.boardDesign[self.board.boardSection + j + self.xPos][-self.board.groundHeight - i -1 - self.yPos] = " "
+
+        self.xPos -= 1
+
+        self.addToBoard()
 
     def moveRight(self):
-        self.xPos = self.xPos + 1
+        for i in range(self.height):
+            for j in range(self.width):
+                self.board.boardDesign[self.board.boardSection + j + self.xPos][-self.board.groundHeight - i -1 - self.yPos] = " "
 
-    def position(self):
-        for x in range(self.width):
-            for y in range(self.height):
-                gameplay.board.viewDesign[gameplay.board.viewSection + self.xPos + x ][self.yPos + y - self.height] = self.form[x][y]
+        self.xPos += 1
 
-def Mandalorian():
+        self.addToBoard()
+    
+    def addToBoard(self):
+        self.board.mandoLives = self.lives
+        self.board.mandoScore = self.score
+        for i in range(self.height):
+            for j in range(self.width):
+                self.board.boardDesign[self.board.boardSection + j + self.xPos][-self.board.groundHeight - i -1 - self.yPos] = self.form[j][-i-1]
+        # j = self.xPos+self.width
+        # for i in range(self.height):
+        #         self.board.boardDesign[self.board.boardSection + j + self.xPos][-self.board.groundHeight - i -1 - self.yPos] = "f"
 
-    height = 4
-    width = 3
-    form = [["M" for x in range(height)] for y in range(width)]
-    mandalorian = Character(height, width, form)
 
-    return mandalorian
+class Mandalorian(Character):
+    pass
