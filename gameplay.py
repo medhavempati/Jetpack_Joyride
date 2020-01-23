@@ -83,11 +83,13 @@ def checkMovement(mandalorian, board, inputKey):
     '''
     return 0 -> Barrier (.)
     return 1 -> Clear
-    return 2 -> Ground/Ceiling
+    return 2 -> Ground/Ceiling/Out_Of_Frame
     return 3 -> Coins
     '''
 
     if inputKey == "d":
+        if (mandalorian.xPos + mandalorian.width + board.boardSection) >= (board.boardSection + board.frameWidth):
+            return 2
         for i in range(mandalorian.yPos, mandalorian.yPos + mandalorian.height):
             if board.boardDesign[mandalorian.xPos + mandalorian.width + board.boardSection][-i -1 -board.groundHeight ] == "X":
                 return 0
@@ -95,6 +97,8 @@ def checkMovement(mandalorian, board, inputKey):
                 return 3
     
     elif inputKey == "a":
+        if (mandalorian.xPos - 1 + board.boardSection) <= board.boardSection :
+            return 2
         for i in range(-mandalorian.yPos, mandalorian.yPos + mandalorian.height):
             if board.boardDesign[mandalorian.xPos - 1 + board.boardSection][-i -1 -board.groundHeight ] == "X":
                 return 0
