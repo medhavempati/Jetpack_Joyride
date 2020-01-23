@@ -11,12 +11,12 @@ class Zapper:
         self.randomZapper = 1
 
     def generateRandomZappers(self):
-        zapperNumber = random.randint(10, 15)
+        zapperNumber = random.randint(50, 150)
             
         for i in range(zapperNumber):
             zapperType = random.randint(1, 4)
             zapperLength = random.randint(4, 12)
-            zapperX = random.randint(self.board.boardSection, self.board.boardSection + self.board.frameWidth)
+            zapperX = random.randint(0, self.board.totalWidth - 200)
             zapperY = random.randint(self.board.ceilingHeight, self.board.height - self.board.groundHeight)
             i+=1
 
@@ -42,45 +42,41 @@ class VerticalZapper(Zapper):
     # self.type = "v"
     def display(self):
         for i in range(self.length):
-            if(self.board.boardDesign[self.startX + self.board.boardSection][self.startY + i] != " "):
-                self.board.displayBoard()
+            if((self.board.boardDesign[self.startX][self.startY + i] != " ") or (self.startX >= self.board.totalWidth)):
                 return
             else:
-                self.board.boardDesign[self.startX + self.board.boardSection][self.startY + i] = "X"
-        self.board.displayBoard()
+                self.board.boardDesign[self.startX][self.startY + i] = "X"
+        return
 
 class HorizontalZapper(Zapper):
 
     # self.type = "h"
     def display(self):
         for i in range(self.length):
-            if(self.board.boardDesign[self.board.boardSection + self.startX + i][self.startY] != " "):
-                self.board.displayBoard()
+            if((self.board.boardDesign[self.startX + i][self.startY] != " ") or (self.startX + i >= self.board.totalWidth)):
                 return
             else:
-                self.board.boardDesign[self.board.boardSection + self.startX + i][self.startY] = "X"
-        self.board.displayBoard()
+                self.board.boardDesign[self.startX + i][self.startY] = "X"
+        return
 
 class LeftZapper(Zapper):
 
     # self.type = "l"
     def display(self):
         for i in range(self.length):
-            if (self.board.boardDesign[self.board.boardSection + self.startX - i][self.startY + i] != " "):
-                self.board.displayBoard()
+            if ((self.board.boardDesign[self.startX - i][self.startY + i] != " ") or (self.startX - i >= self.board.totalWidth)):
                 return
             else:
-                self.board.boardDesign[self.board.boardSection + self.startX - i][self.startY + i] = "X"
-        self.board.displayBoard()
+                self.board.boardDesign[self.startX - i][self.startY + i] = "X"
+        return
 
 class RightZapper(Zapper):
 
     # self.type = "r"
     def display(self):
         for i in range(self.length):
-            if(self.board.boardDesign[self.board.boardSection + self.startX + i][self.startY + i] != 0):
-                self.board.displayBoard()
+            if((self.board.boardDesign[self.startX + i][self.startY + i] != " ") or (self.startX + i >= self.board.totalWidth)):
                 return
             else:
-                self.board.boardDesign[self.board.boardSection + self.startX + i][self.startY + i] = "X"
-        self.board.displayBoard()
+                self.board.boardDesign[self.startX + i][self.startY + i] = "X"
+        return

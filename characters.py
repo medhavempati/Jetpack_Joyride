@@ -39,7 +39,7 @@ class Character:
             for j in range(self.width):
                 self.board.boardDesign[self.board.boardSection + j + self.xPos][-self.board.groundHeight - i -1 - self.yPos] = " "
 
-        self.xPos -= 1
+        self.xPos -= 2
 
         self.addToBoard()
 

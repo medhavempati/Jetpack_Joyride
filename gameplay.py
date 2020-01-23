@@ -21,45 +21,38 @@ def startGame():
 
     while(1):
         inputKey = input.get()
+        checkMovement(mandalorian, board, "")
+        board.timeTrack += 1
 
         if inputKey == "w":
             if checkMovement(mandalorian, board, inputKey) == 1:
                 mandalorian.moveUp()
-                board.displayBoard()
             if checkMovement(mandalorian, board, inputKey) == 0:
                 mandalorian.lives -= 1
                 mandalorian.moveUp()
-                board.displayBoard()
             if checkMovement(mandalorian, board, inputKey) == 3:
                 mandalorian.score += 5
                 mandalorian.moveUp()
-                board.displayBoard()
 
         elif inputKey == "d":
             if checkMovement(mandalorian, board, inputKey) == 1:
                 mandalorian.moveRight()
-                board.displayBoard()
             if checkMovement(mandalorian, board, inputKey) == 0:
                 mandalorian.lives -= 1
                 mandalorian.moveRight()
-                board.displayBoard()
             if checkMovement(mandalorian, board, inputKey) == 3:
                 mandalorian.score += 5
                 mandalorian.moveRight()
-                board.displayBoard()
 
         elif inputKey == "a":
             if checkMovement(mandalorian, board, inputKey) == 1:
                 mandalorian.moveLeft()
-                board.displayBoard()
             if checkMovement(mandalorian, board, inputKey) == 0:
                 mandalorian.lives -= 1
                 mandalorian.moveLeft()
-                board.displayBoard()
             if checkMovement(mandalorian, board, inputKey) == 3:
                 mandalorian.score += 5
                 mandalorian.moveLeft()
-                board.displayBoard()
 
         elif inputKey == "q":
             print("Game Over!\n")
@@ -70,26 +63,38 @@ def startGame():
             break
 
         elif inputKey == "":
+            # mandalorian.moveRight()
             if checkMovement(mandalorian, board, inputKey) == 1:
                 mandalorian.moveDown()
-                board.displayBoard()
             if checkMovement(mandalorian, board, inputKey) == 0:
                 mandalorian.lives -= 1
                 mandalorian.moveDown()
-                board.displayBoard()
+        
+        moveBoard(board, mandalorian)
+        board.displayBoard()
+
+def moveBoard(board, mandalorian):
+    for i in range(mandalorian.height):
+            for j in range(mandalorian.width):
+                board.boardDesign[board.boardSection + j + mandalorian.xPos][-board.groundHeight - i -1 - mandalorian.yPos] = " "
+
+    board.boardSection += 1
+
+    mandalorian.addToBoard()
 
 def checkMovement(mandalorian, board, inputKey):
 
     '''
     return 0 -> Barrier (.)
     return 1 -> Clear
-    return 2 -> Ground/Ceiling/Out_Of_Frame
+    return 2 -> Ground/Ceiling
     return 3 -> Coins
+    return 4 -> Out_Of_Frame
     '''
 
     if inputKey == "d":
         if (mandalorian.xPos + mandalorian.width + board.boardSection) >= (board.boardSection + board.frameWidth):
-            return 2
+            return 4
         for i in range(mandalorian.yPos, mandalorian.yPos + mandalorian.height):
             if board.boardDesign[mandalorian.xPos + mandalorian.width + board.boardSection][-i -1 -board.groundHeight ] == "X":
                 return 0
@@ -98,7 +103,7 @@ def checkMovement(mandalorian, board, inputKey):
     
     elif inputKey == "a":
         if (mandalorian.xPos - 1 + board.boardSection) <= board.boardSection :
-            return 2
+            return 4
         for i in range(-mandalorian.yPos, mandalorian.yPos + mandalorian.height):
             if board.boardDesign[mandalorian.xPos - 1 + board.boardSection][-i -1 -board.groundHeight ] == "X":
                 return 0
@@ -109,18 +114,20 @@ def checkMovement(mandalorian, board, inputKey):
         for i in range(mandalorian.xPos, mandalorian.xPos + mandalorian.width):
             if board.boardDesign[i][-mandalorian.yPos - mandalorian.height - board.groundHeight - 1] == "X":
                 return 0
-            if board.boardDesign[i][-mandalorian.yPos - mandalorian.height - board.groundHeight - 1] == "C":
+            elif board.boardDesign[i][-mandalorian.yPos - mandalorian.height - board.groundHeight - 1] == "C":
                 return 2
-            if board.boardDesign[i][-mandalorian.yPos - mandalorian.height - board.groundHeight - 1] == "$":
+            elif board.boardDesign[i][-mandalorian.yPos - mandalorian.height - board.groundHeight - 1] == "$":
                 return 3
 
     elif inputKey == "":
+        if (mandalorian.xPos - 2 + board.boardSection) <= board.boardSection :
+            return 4
         for i in range(mandalorian.xPos, mandalorian.xPos + mandalorian.width):
             if board.boardDesign[i][mandalorian.yPos - 1] == "X":
                 return 0
-            if board.boardDesign[i][mandalorian.yPos - 1] == "G":
+            elif board.boardDesign[i][mandalorian.yPos - 1] == "G":
                 return 2
-            if board.boardDesign[i][mandalorian.yPos - 1] == "$":
+            elif board.boardDesign[i][mandalorian.yPos - 1] == "$":
                 return 3
     return 1
         

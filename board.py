@@ -8,7 +8,7 @@ class Board:
         
         self.height = 40
         self.frameWidth = 190
-        self.totalWidth = 50000
+        self.totalWidth = 1500
 
         self.boardSection = 0 
         self.boardDesign = [[" " for x in range(self.height)] for y in range(self.totalWidth)]
@@ -18,6 +18,8 @@ class Board:
 
         self.mandoLives = 5
         self.mandoScore = 0
+
+        self.timeTrack = 0
 
         for i in range(self.totalWidth):
             for j in range(self.ceilingHeight):
@@ -50,6 +52,7 @@ class Board:
 
         print('Lives: ' + str(self.mandoLives))
         print('Score: ' + str(self.mandoScore))
+        print("Time: " + str(self.timeTrack))
 
         for i in range(self.height):
             for j in range(self.boardSection, self.boardSection + self.frameWidth):
