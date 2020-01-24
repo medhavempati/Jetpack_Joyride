@@ -43,8 +43,8 @@ class Board:
 
         # self.boardSection += 1
 
-        print('Lives: ' + str(self.mandoLives))
-        print('Score: ' + str(self.mandoScore))
+        # print('Lives: ' + str(self.mandoLives))
+        # print('Score: ' + str(self.mandoScore))
 
         for i in range(self.height):
             for j in range(self.boardSection, self.boardSection + self.frameWidth):
@@ -56,9 +56,9 @@ class Board:
     def displayBoard(self):
         print("\033[0;0H")
 
-        print(colorama.Back.BLACK + colorama.Fore.WHITE + 'Lives: ' + str(self.mandoLives))
-        print(colorama.Back.BLACK + colorama.Fore.WHITE + 'Score: ' + str(self.mandoScore))
-        print(colorama.Back.BLACK + colorama.Fore.WHITE + "Time: " + str(self.timeTrack))
+        # print(colorama.Back.BLACK + colorama.Fore.WHITE + 'Lives: ' + str(self.mandoLives))
+        # print(colorama.Back.BLACK + colorama.Fore.WHITE + 'Score: ' + str(self.mandoScore))
+        # print(colorama.Back.BLACK + colorama.Fore.WHITE + "Time: " + str(self.timeTrack))
 
         for i in range(self.height):
             for j in range(self.boardSection, self.boardSection + self.frameWidth):
@@ -76,6 +76,8 @@ class Board:
                     print(colorama.Back.BLACK + colorama.Fore.YELLOW + "$", end="")
                 elif self.boardDesign[j][i] == ">>":
                     print(colorama.Back.RED + colorama.Fore.YELLOW + ">>", end="")
+                elif self.boardDesign[j][i] == "B":
+                    print(colorama.Back.RED + colorama.Fore.YELLOW + "X", end="")
                 
             print()
 

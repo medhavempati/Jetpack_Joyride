@@ -78,3 +78,31 @@ class Character:
 
 class Mandalorian(Character):
     pass
+
+class Boss:
+    def __init__(self, form, board):
+
+        self.height = 6
+        self.width = 5
+        self.form = form
+
+        self.yPos = 0
+
+        self.board = board
+
+        self.lives = 15
+
+    def addBossToBoard(self):
+        for i in range(self.height):
+            for j in range(self.width):
+                self.board.boardDesign[self.board.totalWidth - 10 + j][-self.board.groundHeight -i -1 - self.yPos] = self.form[j][-i-1]
+
+def moveBoss(boss, mandalorian, board):
+    for i in range(boss.height):
+            for j in range(boss.width):
+                board.boardDesign[board.totalWidth - 10 + j][-board.groundHeight - i -1 - boss.yPos] = " "
+    
+    boss.yPos = mandalorian.yPos
+
+    boss.addBossToBoard()
+

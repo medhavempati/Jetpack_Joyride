@@ -59,9 +59,10 @@ class SpeedPowerUp:
         return
 
 def speedTimer(board, mandalorian):
-    if board.speedTime <= 30:
+    print("time left: " + str(board.speedTime), end="")
+    print("speed: " + str(mandalorian.speed), end="")
+    if board.speedTime <= 30 and board.speedTime > 0:
         board.speedTime -= 1
-        return
     
     elif board.speedTime <= 0:
         mandalorian.speed = 1
